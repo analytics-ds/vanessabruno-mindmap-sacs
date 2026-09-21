@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Vanessa Bruno — Mindmap Sacs & Maroquinerie</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#77B0ED;
+    --yellow:#FFFF7D;
+    --kaki:#ADAC2F;
+    --beige:#F3EDE8;
+    --black:#101010;
+    --gray-light:#F5F5F5;
+    --gray-medium:#E8E8E8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#FFFFFF;
+    font-family:'Inter',sans-serif;
+    color:var(--black);
+  }
+  header{
+    padding:32px 40px 8px 40px;
+  }
+  header h1{
+    font-size:22px;
+    font-weight:700;
+    margin:0 0 4px 0;
+    color:var(--black);
+  }
+  header p{
+    font-size:13px;
+    color:rgba(16,16,16,0.7);
+    margin:0;
+  }
+  #legend{
+    position:sticky;
+    top:16px;
+    float:right;
+    margin:0 40px 0 0;
+    background:#FFFFFF;
+    border:1px solid var(--gray-medium);
+    border-radius:8px;
+    padding:10px 16px;
+    font-size:12px;
+    z-index:50;
+  }
+  #legend .legend-title{
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  #legend .legend-row{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin:3px 0;
+  }
+  .dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    display:inline-block;
+    flex:none;
+    border:1px solid rgba(16,16,16,0.15);
+  }
+  .dot.create{ background:var(--yellow); }
+  .dot.optimize{ background:var(--blue); }
+
+  #mindmap-wrap{
+    position:relative;
+    padding:24px 60px 80px 40px;
+    overflow-x:auto;
+  }
+  #connectors{
+    position:absolute;
+    top:0; left:0;
+    pointer-events:none;
+  }
+  #connectors path{
+    fill:none;
+    stroke:rgba(16,16,16,0.35);
+    stroke-width:1.2;
+  }
+
+  .root-title{
+    font-size:20px;
+    font-weight:700;
+    padding:6px 0;
+    display:inline-block;
+  }
+
+  .branch{
+    display:inline-flex;
+    align-items:center;
+  }
+  .children-col{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:10px;
+    margin-left:36px;
+  }
+
+  .node-box{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+    padding:7px 12px;
+    border-radius:8px;
+    border:1px solid var(--gray-medium);
+    background:#FFFFFF;
+    font-size:12.5px;
+  }
+  .node-box.group{
+    border-radius:4px;
+    background:var(--gray-light);
+    border-color:var(--gray-medium);
+    font-weight:600;
+    letter-spacing:0.02em;
+    text-transform:uppercase;
+    font-size:11px;
+    color:rgba(16,16,16,0.8);
+  }
+  .node-box.hub{
+    font-weight:700;
+    font-size:13px;
+    padding:8px 14px;
+  }
+  .node-box.leaf .vol{
+    color:rgba(16,16,16,0.55);
+    font-weight:400;
+  }
+  .collapse-icon{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    border:1px solid rgba(16,16,16,0.3);
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    color:rgba(16,16,16,0.5);
+    flex:none;
+  }
+
+  footer{
+    padding:0 40px 40px 40px;
+    font-size:11px;
+    color:rgba(16,16,16,0.5);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Vanessa Bruno — Mindmap Sacs &amp; Maroquinerie</h1>
+  <p>Architecture des collections existantes (à optimiser) et des opportunités de création, à partir du crawl Screaming Frog (vanessabruno.fr, 12 342 URLs) et du mapping mots-clés / gap.</p>
+</header>
+
+<div id="legend">
+  <div class="legend-title">Légende</div>
+  <div class="legend-row"><span class="dot create"></span> Création</div>
+  <div class="legend-row"><span class="dot optimize"></span> Optimisation</div>
+</div>
+
+<div id="mindmap-wrap">
+  <svg id="connectors"></svg>
+  <div id="tree"></div>
+</div>
+
+<footer>datashake · SEO Vanessa Bruno · généré depuis le crawl Screaming Frog du 16/09/2026 et le mapping mots-clés cluster_map_filtre.csv</footer>
+
+<script>
+const DATA = {
+  title: "Sac",
+  children: [
+    {
+      id: "sacs", label: "Sacs", type: "hub", status: "optimize", url: "/sacs.html",
+      children: [
+        { id: "par-modele", label: "PAR MODÈLE", type: "group", children: [
+          { label: "Moon", status: "optimize" },
+          { label: "Jess", status: "optimize" },
+          { label: "Othilia", status: "optimize" },
+          { label: "Lune", status: "optimize" },
+          { label: "Mathilde", status: "optimize" }
+        ]},
+        { id: "par-matiere", label: "PAR MATIÈRE", type: "group", children: [
+          { label: "Cuir", status: "optimize" },
+          { label: "Cuir velours", status: "optimize" },
+          { label: "Coton", status: "optimize" },
+          { label: "Lin", status: "optimize" },
+          { label: "Raphia", status: "optimize" }
+        ]},
+        { id: "par-forme", label: "PAR FORME", type: "group", children: [
+          { label: "Sacs à bandoulière", status: "optimize" },
+          { label: "Sacs porté épaule", status: "optimize" },
+          { label: "Sacs banane", status: "optimize" },
+          { label: "Sacs seau", status: "optimize" },
+          { label: "Sacs filet", status: "optimize" },
+          { label: "Sacs paniers", status: "optimize" },
+          { label: "Sacs matelassés", status: "optimize" },
+          { label: "Petits sacs", status: "optimize" }
+        ]},
+        { id: "par-couleur", label: "PAR COULEUR", type: "group", children: [
+          { label: "Beige", status: "optimize" },
+          { label: "Rouge", status: "optimize" },
+          { label: "Vert", status: "optimize" },
+          { label: "Blanc", status: "optimize" },
+          { label: "Noir", status: "optimize" },
+          { label: "Marron", status: "optimize" },
+          { label: "Rose", status: "optimize" }
+        ]},
+        { id: "par-forme-matiere-new", label: "PAR FORME + MATIÈRE (opportunités)", type: "group", children: [
+          { label: "Sac à main 3 compartiments cuir", vol: "170", status: "create" },
+          { label: "Sac gibecière", vol: "140", status: "create" },
+          { label: "Sac cartable femme", vol: "90", status: "create" },
+          { label: "Mini sac à dos femme cuir", vol: "90", status: "create" },
+          { label: "Sac à main cuir cognac", vol: "90", status: "create" },
+          { label: "Sac de bureau", vol: "90", status: "create" },
+          { label: "Sac cuir effet croco", vol: "90", status: "create" },
+          { label: "Sac à dos cuir camel", vol: "70", status: "create" }
+        ]},
+        { id: "par-porte-new", label: "PAR PORTÉ ÉPAULE / BANDOULIÈRE (opportunités)", type: "group", children: [
+          { label: "Petit sac bandoulière cuir", vol: "90", status: "create" },
+          { label: "Sac porté épaule et dos", vol: "70", status: "create" },
+          { label: "Sac bandoulière croco noir", vol: "70", status: "create" },
+          { label: "Sacoche d'épaule", vol: "70", status: "create" },
+          { label: "Sac bandoulière orange", vol: "40", status: "create" },
+          { label: "Sac bandoulière multipoches", vol: "30", status: "create" },
+          { label: "Cartable bandoulière cuir", vol: "20", status: "create" }
+        ]}
+      ]
+    },
+    {
+      id: "cabas", label: "Le Cabas", type: "hub", status: "optimize", url: "/le-cabas.html",
+      children: [
+        { id: "cabas-matiere", label: "PAR MATIÈRE", type: "group", children: [
+          { label: "Cabas cuir craquelé", status: "optimize" },
+          { label: "Cabas cuir lisse", status: "optimize" },
+          { label: "Cabas cuir nubuck", status: "optimize" },
+          { label: "Cabas lin", status: "optimize" },
+          { label: "Cabas raphia", status: "optimize" },
+          { label: "Cabas matelassé", status: "optimize" }
+        ]},
+        { id: "cabas-taille", label: "PAR TAILLE", type: "group", children: [
+          { label: "Cabas L", status: "optimize" },
+          { label: "Cabas M", status: "optimize" }
+        ]},
+        { id: "cabas-new", label: "OPPORTUNITÉS", type: "group", children: [
+          { label: "Cabas effet croco", vol: "70", status: "create" },
+          { label: "Cabas effet croco noir", vol: "40", status: "create" }
+        ]}
+      ]
+    },
+    {
+      id: "maroquinerie", label: "Petite Maroquinerie", type: "hub", status: "optimize", url: "/accessoires/petite-maroquinerie.html",
+      children: [
+        { id: "maroq-new", label: "OPPORTUNITÉS", type: "group", children: [
+          { label: "Sacoche cartable femme", vol: "90", status: "create" },
+          { label: "Sacoche femme", vol: "50", status: "create" },
+          { label: "Pochette femme cuir", vol: "50", status: "create" },
+          { label: "Maroquinerie cartable", vol: "40", status: "create" },
+          { label: "Portefeuille porte-monnaie cuir", vol: "30", status: "create" }
+        ]}
+      ]
+    },
+    { id: "soiree", label: "Sacs de Soirée", type: "hub", status: "optimize", url: "/the-gift-edit/sacs-de-soiree.html" },
+    { id: "nouveautes", label: "Nouveautés Sacs & Cabas", type: "hub", status: "optimize", url: "/nouveautes/nouveautes-sacs-cabas.html" }
+  ]
+};
+
+const tree = document.getElementById('tree');
+const svg = document.getElementById('connectors');
+const links = [];
+
+function renderNode(node, container, isRoot) {
+  const branch = document.createElement('div');
+  branch.className = 'branch';
+
+  let boxEl;
+  if (isRoot) {
+    boxEl = document.createElement('div');
+    boxEl.className = 'root-title';
+    boxEl.textContent = node.title;
+  } else {
+    boxEl = document.createElement('div');
+    boxEl.className = 'node-box ' + (node.type === 'group' ? 'group' : (node.type === 'hub' ? 'hub' : 'leaf'));
+    if (node.status) {
+      const dot = document.createElement('span');
+      dot.className = 'dot ' + node.status;
+      boxEl.appendChild(dot);
+    }
+    const txt = document.createElement('span');
+    txt.textContent = node.label;
+    boxEl.appendChild(txt);
+    if (node.vol) {
+      const vol = document.createElement('span');
+      vol.className = 'vol';
+      vol.textContent = '(' + node.vol + ')';
+      boxEl.appendChild(vol);
+    }
+    if (!node.children) {
+      // leaf, no collapse icon
+    }
+  }
+  branch.appendChild(boxEl);
+
+  if (node.children && node.children.length) {
+    const col = document.createElement('div');
+    col.className = 'children-col';
+    node.children.forEach(child => {
+      const childBoxEl = renderNode(child, col, false);
+      links.push([boxEl, childBoxEl]);
+    });
+    branch.appendChild(col);
+  }
+
+  container.appendChild(branch);
+  return boxEl;
+}
+
+renderNode(DATA, tree, true);
+
+function drawConnectors() {
+  const wrapEl = document.getElementById('mindmap-wrap');
+  svg.setAttribute('width', '1');
+  svg.setAttribute('height', '1');
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const wrapRect = wrapEl.getBoundingClientRect();
+  const scrollX = wrapEl.scrollLeft;
+  const scrollY = wrapEl.scrollTop;
+
+  const allBoxes = Array.from(document.querySelectorAll('.node-box, .root-title'));
+  let maxRight = 0, maxBottom = 0;
+  allBoxes.forEach(el => {
+    const r = el.getBoundingClientRect();
+    maxRight = Math.max(maxRight, r.right - wrapRect.left + scrollX);
+    maxBottom = Math.max(maxBottom, r.bottom - wrapRect.top + scrollY);
+  });
+  svg.setAttribute('width', Math.ceil(maxRight + 40));
+  svg.setAttribute('height', Math.ceil(maxBottom + 40));
+
+  links.forEach(([a, b]) => {
+    const ra = a.getBoundingClientRect();
+    const rb = b.getBoundingClientRect();
+    const x1 = ra.right - wrapRect.left + scrollX;
+    const y1 = ra.top + ra.height / 2 - wrapRect.top + scrollY;
+    const x2 = rb.left - wrapRect.left + scrollX;
+    const y2 = rb.top + rb.height / 2 - wrapRect.top + scrollY;
+    const midX = (x1 + x2) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M ${x1},${y1} C ${midX},${y1} ${midX},${y2} ${x2},${y2}`);
+    svg.appendChild(path);
+  });
+}
+
+window.addEventListener('load', drawConnectors);
+window.addEventListener('resize', drawConnectors);
+setTimeout(drawConnectors, 50);
+</script>
+
+</body>
+</html>
